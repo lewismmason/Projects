@@ -1,2 +1,2 @@
 # Projects
-This repository contains some public projects I am working on. Generally, each of them is to develop skills, or tackle a specific problem. The results will be used for my other private repositories, as well as used to improve my personal skills.
+This repository contains some public mini projects I am working on. Generally, each of them is to develop skills, or tackle a specific problem. The results will be used for my other private repositories, as well as used to improve my personal skills.
