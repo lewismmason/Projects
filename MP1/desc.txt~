@@ -1,0 +1,22 @@
+Mini Project 1:
+
+
+Client-Server-Client multiplayer interactions for videogames and other
+turn-based applications. This will be done for an extremely basic prototype
+"card game" with minimal gameplay.
+
+
+Goal:
+Learn how to do server client stuff in Godot related to gameplay between
+users, not database related. 
+
+
+Stage 1:
+Server and 2 clients (all gdscript) on same device, able to "play" basic card
+game
+
+Stage 2:
+Server and 2 clients all on separate devices (mobile, comp, old comp)
+
+Stage 3:
+Try to set it up with external server not hosted LAN.

@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlo4ejdejrm5t"]
+
+[ext_resource type="Script" path="res://client.gd" id="1_6i6w7"]
+
+[node name="Networking" type="Node2D"]
+script = ExtResource("1_6i6w7")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -33.0
+offset_right = 47.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Connect" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Connect"
+
+[node name="Disconnect" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Disconnect"
+
+[connection signal="button_up" from="CanvasLayer/VBoxContainer/Connect" to="." method="_on_connect_button_up"]
+[connection signal="button_up" from="CanvasLayer/VBoxContainer/Disconnect" to="." method="_on_disconnect_button_up"]
