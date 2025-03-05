@@ -1,0 +1,24 @@
+Are rpc calls the right thing to use here? What should I use instead, what are tradeoffs? Say for example I want to make this into a card game or a turn based strategy game rather than rock-paper-scissors?
+
+	RPCs are great. The High Level API is both RPCs and the node things, but imo (with some bias) I think RPCs are way more flexible than the node things. An alternative is either using what I just mentioned (send_bytes on the SceneMultiplayer directly) or directly using low level networking. The send_bytes method is a bit more work in that you'd need to design something to handle/route traffic properly (likely by designing a protocol, such as the first byte tells you the type of packet so you can provide it to the right consumer), the latter adds on top having to manage connections / polling directly making it even more complex for you. 
+The downsides of using RPCs / the node things is the heavy dependence on the SceneTree with respect to NodePaths. I.e. if you are having specific nodes do an RPC, that rpc function needs to be present on all peers at that same node path. This can make certain tree operations a huge pain, such as reparenting, deleting, and sometimes additions. My personal advice is to not use RPCs on every single node, but rather consolidate to a singleton/manager type node that you know will always be present. That way instead of every Enemy needing to handle it's own networking, you can bundle up state updates on a single EnemyManager and delete Enemy as needed.
+
+
+
+The gameplay "server" is running Godot for the "gameplay", is this a bad idea? Should I use something else for it? Eventually I want to get this server to be non-local, running on some service (idk how to do this yet, next learning step). 
+
+	This is a fine enough approach, but it really depends on your project and it's requirements imo. Server authoritative (in conjunction with developer only hosted dedicated servers) is commonly used when the project is a more competitive focused one where you want to really limit cheating/have a higher control over things. This kind of pattern can be overkill for some projects, such as a couch coop style game, or make a lot of sense for others such as a competitive esports FPS. It really depends on your project.
+
+
+
+Can external sites run Godot? I assume yes. How do companies do this, say CS2 when a game is found, or pokemon TCG pocket when you are in a match, what are the gameplay servers using?
+
+	The way this is done is often there is a "coordinator" or "matchmaker" server (written in whatever you want really) that spins up new game server processes for these matches, and provides the connection details to those who need it so they can connect directly to it. Provided you are compiling your server binaries for the OS/Architecture, pretty much anything should be able to run it aside from hardware constraints. Most server environments will be linux based.
+
+
+
+I am hoping that the skills I am learning are transferable to a non-godot environment (work skills, etc). Are these? I'm worried by using Godot for the server that I am pigeon-holing my skills
+
+	You are learning two things here. 1) game networking / network programming concepts. 2) how to use the Godot API
+the first is broadly transferable, the same way when you first learn how to program you are learning both how to program and how to use that specific language. The how to program is a broadly transferable skill to any language.
+The Godot specific API stuff is going to generally be more godot specific, like you can't roll into Unity or Unreal and start typing godot calls and expect it to work. But this experience you gain should make it easier for you to read their documentation for how to use their specific tools because you'd already know what you want to do, and just need to know the right "words" to use if that makes sense

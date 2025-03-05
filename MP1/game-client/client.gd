@@ -9,6 +9,9 @@ var _connected_peer_ids = []
 
 func _ready():
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
+	multiplayer.connected_to_server.connect(_on_server_connected)
+	multiplayer.connection_failed.connect(_on_connection_failed)
+	update_connection_button_status()
 
 
 func _on_connect_button_up():
@@ -20,21 +23,68 @@ func _on_connect_button_up():
 		return
 
 	multiplayer.multiplayer_peer = multiplayer_peer
-	print("Client connected to server.")
-	
+	update_connection_button_status()
+	$ConnectionTimeOut.start()
 
 
 func _on_disconnect_button_up():
 	multiplayer_peer.close()
+	update_connection_button_status()
 	print("Client disconnected from server.")
+	$ConnectionTimeOut.stop()
 
 
 func _on_server_disconnected() -> void:
 	multiplayer_peer.close()
+	update_connection_button_status()
 	print("Connection to server lost.")
+	$ConnectionTimeOut.stop()
 
 
-@rpc func sync_player_list(connected_peer_ids) -> void:
+func _on_server_connected() -> void:
+	update_connection_button_status()
+	$ConnectionTimeOut.stop()
+
+
+func _on_connection_time_out_timeout():
+	print("Connection timeout triggered.")
+	multiplayer_peer.close()
+	$ConnectionTimeOut.stop()
+
+
+func _on_connection_failed() -> void:
+	print("Connection to server failed.")
+	$ConnectionTimeOut.stop()
+	update_connection_button_status()
+
+
+func update_connection_button_status() -> void:
+	if multiplayer_peer.get_connection_status() == multiplayer_peer.ConnectionStatus.CONNECTION_CONNECTED:
+		$CanvasLayer/VBoxContainer/Connect.disabled = true
+		$CanvasLayer/VBoxContainer/Connect.modulate = Color(0.5,0.5,0.5)
+		$CanvasLayer/VBoxContainer/Disconnect.disabled = false
+		$CanvasLayer/VBoxContainer/Disconnect.modulate = Color(1,1,1)
+		$CanvasLayer/VBoxContainer/ID.text = str(multiplayer_peer.get_unique_id())
+		
+	elif multiplayer_peer.get_connection_status() == multiplayer_peer.ConnectionStatus.CONNECTION_DISCONNECTED:
+		$CanvasLayer/VBoxContainer/Connect.disabled = false
+		$CanvasLayer/VBoxContainer/Connect.modulate = Color(1,1,1)
+		$CanvasLayer/VBoxContainer/Disconnect.disabled = true
+		$CanvasLayer/VBoxContainer/Disconnect.modulate = Color(0.5,0.5,0.5)
+		$CanvasLayer/VBoxContainer/ID.text = "Disconnected."
+		
+	elif multiplayer_peer.get_connection_status() == multiplayer_peer.ConnectionStatus.CONNECTION_CONNECTING:
+		$CanvasLayer/VBoxContainer/Connect.disabled = true
+		$CanvasLayer/VBoxContainer/Connect.modulate = Color(0.5,0.5,0.5)
+		$CanvasLayer/VBoxContainer/Disconnect.disabled = true
+		$CanvasLayer/VBoxContainer/Disconnect.modulate = Color(0.5,0.5,0.5)
+		$CanvasLayer/VBoxContainer/ID.text = "Connecting..."
+
+
+#region RPC
+@rpc 
+func sync_player_list(connected_peer_ids) -> void:
 	self._connected_peer_ids = connected_peer_ids
 	#multiplayer_peer.get_unique_id()
 	print("Currently connected players: " + str(_connected_peer_ids))
+#endregion

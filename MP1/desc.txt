@@ -3,7 +3,7 @@ Mini Project 1:
 
 Client-Server-Client multiplayer interactions for videogames and other
 turn-based applications. This will be done for an extremely basic prototype
-"card game" with minimal gameplay.
+game with minimal gameplay. UPDATE: the game is rock-paper-scissors.
 
 
 Goal:
