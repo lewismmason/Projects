@@ -17,7 +17,7 @@ func _ready():
 func _on_connect_button_up():
 	print("Connecting client...")
 	var err = multiplayer_peer.create_client("127.0.0.1",PORT)
-	
+
 	if err != OK:
 		printerr("Failure to create Client. Code: " + str(err))
 		return
@@ -31,39 +31,38 @@ func _on_disconnect_button_up():
 	multiplayer_peer.close()
 	update_connection_button_status()
 	print("Client disconnected from server.")
-	$ConnectionTimeOut.stop()
 
 
 func _on_server_disconnected() -> void:
 	multiplayer_peer.close()
 	update_connection_button_status()
 	print("Connection to server lost.")
-	$ConnectionTimeOut.stop()
 
 
 func _on_server_connected() -> void:
 	update_connection_button_status()
-	$ConnectionTimeOut.stop()
 
 
 func _on_connection_time_out_timeout():
 	print("Connection timeout triggered.")
 	multiplayer_peer.close()
-	$ConnectionTimeOut.stop()
 
 
 func _on_connection_failed() -> void:
 	print("Connection to server failed.")
-	$ConnectionTimeOut.stop()
 	update_connection_button_status()
+	$CanvasLayer/VBoxContainer/ID.text = "Failed."
 
 
 func update_connection_button_status() -> void:
+	$ConnectionTimeOut.stop() # We stop the timer here...
+	
 	if multiplayer_peer.get_connection_status() == multiplayer_peer.ConnectionStatus.CONNECTION_CONNECTED:
 		$CanvasLayer/VBoxContainer/Connect.disabled = true
 		$CanvasLayer/VBoxContainer/Connect.modulate = Color(0.5,0.5,0.5)
 		$CanvasLayer/VBoxContainer/Disconnect.disabled = false
 		$CanvasLayer/VBoxContainer/Disconnect.modulate = Color(1,1,1)
+		$CanvasLayer/Gameplay.visible = true
 		$CanvasLayer/VBoxContainer/ID.text = str(multiplayer_peer.get_unique_id())
 		
 	elif multiplayer_peer.get_connection_status() == multiplayer_peer.ConnectionStatus.CONNECTION_DISCONNECTED:
@@ -72,6 +71,7 @@ func update_connection_button_status() -> void:
 		$CanvasLayer/VBoxContainer/Disconnect.disabled = true
 		$CanvasLayer/VBoxContainer/Disconnect.modulate = Color(0.5,0.5,0.5)
 		$CanvasLayer/VBoxContainer/ID.text = "Disconnected."
+		$CanvasLayer/Gameplay.visible = false
 		
 	elif multiplayer_peer.get_connection_status() == multiplayer_peer.ConnectionStatus.CONNECTION_CONNECTING:
 		$CanvasLayer/VBoxContainer/Connect.disabled = true
@@ -79,6 +79,7 @@ func update_connection_button_status() -> void:
 		$CanvasLayer/VBoxContainer/Disconnect.disabled = true
 		$CanvasLayer/VBoxContainer/Disconnect.modulate = Color(0.5,0.5,0.5)
 		$CanvasLayer/VBoxContainer/ID.text = "Connecting..."
+		$CanvasLayer/Gameplay.visible = false
 
 
 #region RPC

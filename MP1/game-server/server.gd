@@ -1,13 +1,14 @@
 extends Node
 
 const PORT = 9004 # https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers says this seems safe for now
+const MAX_CLIENTS = 2
 
 var multiplayer_peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 
 var connected_peer_ids = []
 
 func _ready():
-	var err = multiplayer_peer.create_server(PORT)
+	var err = multiplayer_peer.create_server(PORT,MAX_CLIENTS)
 
 	if err != OK: 
 		printerr("Failure to create server. Code: " + str(err))

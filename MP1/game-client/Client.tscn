@@ -1,6 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://dlo4ejdejrm5t"]
+[gd_scene load_steps=6 format=3 uid="uid://dlo4ejdejrm5t"]
 
 [ext_resource type="Script" path="res://client.gd" id="1_6i6w7"]
+[ext_resource type="Texture2D" uid="uid://dj6w0y333v7fb" path="res://Assets/RockPreAA.png" id="2_dr8c2"]
+[ext_resource type="Texture2D" uid="uid://beerw8n8bled" path="res://Assets/PaperPreAA.png" id="3_0x3lu"]
+[ext_resource type="Texture2D" uid="uid://cc3ixgyrkglo" path="res://Assets/ScissorsPreAA.png" id="4_rtd5v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ckt3q"]
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="Networking" type="Node2D"]
 script = ExtResource("1_6i6w7")
@@ -24,6 +38,139 @@ text = "Disconnect"
 [node name="ID" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Update"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 50
+
+[node name="Gameplay" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -425.0
+offset_right = 425.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="Opponent" type="HBoxContainer" parent="CanvasLayer/Gameplay"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Rock" type="Panel" parent="CanvasLayer/Gameplay/Opponent"]
+self_modulate = Color(1, 0.784314, 0.784314, 1)
+z_index = -1
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ckt3q")
+
+[node name="Rock" type="TextureButton" parent="CanvasLayer/Gameplay/Opponent/Rock"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_dr8c2")
+
+[node name="Paper" type="Panel" parent="CanvasLayer/Gameplay/Opponent"]
+self_modulate = Color(1, 0.784314, 0.784314, 1)
+z_index = -1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ckt3q")
+
+[node name="Paper" type="TextureButton" parent="CanvasLayer/Gameplay/Opponent/Paper"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("3_0x3lu")
+
+[node name="Scissors" type="Panel" parent="CanvasLayer/Gameplay/Opponent"]
+self_modulate = Color(1, 0.784314, 0.784314, 1)
+z_index = -1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ckt3q")
+
+[node name="Scissors" type="TextureButton" parent="CanvasLayer/Gameplay/Opponent/Scissors"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("4_rtd5v")
+
+[node name="Player" type="HBoxContainer" parent="CanvasLayer/Gameplay"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Rock" type="Panel" parent="CanvasLayer/Gameplay/Player"]
+z_index = -1
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ckt3q")
+
+[node name="Rock" type="TextureButton" parent="CanvasLayer/Gameplay/Player/Rock"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_dr8c2")
+
+[node name="Paper" type="Panel" parent="CanvasLayer/Gameplay/Player"]
+z_index = -1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ckt3q")
+
+[node name="Paper" type="TextureButton" parent="CanvasLayer/Gameplay/Player/Paper"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("3_0x3lu")
+
+[node name="Scissors" type="Panel" parent="CanvasLayer/Gameplay/Player"]
+z_index = -1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ckt3q")
+
+[node name="Scissors" type="TextureButton" parent="CanvasLayer/Gameplay/Player/Scissors"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("4_rtd5v")
 
 [node name="ConnectionTimeOut" type="Timer" parent="."]
 wait_time = 5.0
