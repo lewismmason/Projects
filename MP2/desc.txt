@@ -1,0 +1,22 @@
+Mini Project 2:
+
+Basic understanding and implementation of HTTPS requests using Godot again because I'm familiar with it.
+
+
+Goal:
+
+I've done a bunch of reading on SSL/HTTPS, and understand what goes on at a high level. I want to get a better understanding of how people actually use them, I assume it won't be complicated, likely the heavy lifting is done for me already.
+
+Create server (mock database) and client, where the server has a REST api (I think). I'll use the example of videogame database with player stats, since that is my most immediate use case based on my hobbies! Everything will be local on my computer again.
+
+
+Stage 1:
+
+Get client and database just communicating with https
+
+Play around with stuff
+
+
+Stage 2: 
+
+REST api implementation

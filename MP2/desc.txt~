@@ -1,0 +1,11 @@
+tabase-Server Client interactions containing accounts security etc.
+
+
+Goal:
+Create a database server that keeps client information for multiple clients,
+and can update it etc
+
+Has client accounts, passwords, etc.
+
+Client GDscript, server database ???
+
