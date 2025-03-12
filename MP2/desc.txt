@@ -12,11 +12,8 @@ Create server (mock database) and client, where the server has a REST api (I thi
 
 Stage 1:
 
-Get client and database just communicating with https
+Made a silly mistake, Godot is the wrong tool for the server-side.
 
-Play around with stuff
+Will use something else, but this will take a bit longer to do now!
 
-
-Stage 2: 
-
-REST api implementation
+Make client and server sides.
